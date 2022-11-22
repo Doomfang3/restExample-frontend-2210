@@ -1,17 +1,27 @@
-import { ActionIcon, Autocomplete, Button, Card, createStyles, Modal, Skeleton, Text } from '@mantine/core'
+import {
+  ActionIcon,
+  Autocomplete,
+  Button,
+  Card,
+  createStyles,
+  Modal,
+  Skeleton,
+  Text,
+} from '@mantine/core'
 import { IconTrash } from '@tabler/icons'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
+import { AppContext } from '../contexts/AppContext'
 
 const useStyles = createStyles(theme => ({
   container: {
     margin: '2rem',
     padding: '20px',
     '&:hover': {
-      background: 'red',
+      //  background: 'red',
     },
     [`@media (max-width: ${theme.breakpoints.sm}px)`]: {
       '&:hover': {
-        background: 'blue',
+        // background: 'blue',
       },
     },
   },
@@ -19,6 +29,8 @@ const useStyles = createStyles(theme => ({
 
 const Beer = ({ beer, deleteBeer, fetchBeers, isLoading }) => {
   const { classes } = useStyles()
+
+  const { count, handleCount } = useContext(AppContext)
 
   const [isEditing, setIsEditing] = useState(false)
   const [name, setName] = useState(beer.name)
@@ -71,6 +83,10 @@ const Beer = ({ beer, deleteBeer, fetchBeers, isLoading }) => {
         data={['React', 'Angular', 'Svelte', 'Vue']}
       />
       <Modal opened={isEditing} onClose={() => setIsEditing(false)} title='Change this beer'>
+        <h2>{count}</h2>
+        <button type='button' onClick={() => handleCount(count + 1)}>
+          +
+        </button>
         <form onSubmit={handleSubmit}>
           <label>
             Name :

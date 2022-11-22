@@ -1,55 +1,34 @@
-import { useEffect, useState } from 'react'
-import Beer from './components/Beer'
-import NewBeer from './components/NewBeer'
+import { useContext } from 'react'
+import { NavLink, Route, Routes } from 'react-router-dom'
+import PrivateRoute from './components/PrivateRoute'
+import { SessionContext } from './contexts/SessionContext'
+import BeersPage from './pages/BeersPage'
+import LoginPage from './pages/LoginPage'
+import SignupPage from './pages/SignupPage'
 
 function App() {
-  const [beers, setBeers] = useState([{}, {}, {}])
-  const [isLoading, setIsLoading] = useState(true)
-
-  /**
-   * Function to fetch our beers from our API (backend)
-   */
-  const fetchBeers = async () => {
-    const response = await fetch('http://localhost:5005/api/beers')
-    const beers = await response.json()
-
-    setBeers(beers)
-  }
-
-  /**
-   * Fetch our beers at mounting time
-   */
-  useEffect(() => {
-    fetchBeers()
-    setIsLoading(false)
-  }, [])
-
-  /**
-   * Delete one beer
-   */
-  const deleteBeer = async beerId => {
-    // Delete a beer and await for the deletion (you SHOULD have a try/catch there)
-    await fetch(`http://localhost:5005/api/beers/${beerId}`, {
-      method: 'DELETE',
-    })
-    // Fetch the beers once the beer was properly deleted
-    fetchBeers()
-  }
+  const { isAuthenticated } = useContext(SessionContext)
 
   return (
-    <div className='App'>
-      <h1>My beers</h1>
-      <NewBeer fetchBeers={fetchBeers} />
-      {beers.map(beer => (
-        <Beer
-          key={beer._id}
-          beer={beer}
-          deleteBeer={deleteBeer}
-          fetchBeers={fetchBeers}
-          isLoading={isLoading}
+    <>
+      {isAuthenticated ? (
+        <NavLink to='/beers'>Beers</NavLink>
+      ) : (
+        <NavLink to='/login'>Login</NavLink>
+      )}
+      <Routes>
+        <Route path='/signup' element={<SignupPage />} />
+        <Route path='/login' element={<LoginPage />} />
+        <Route
+          path='/beers'
+          element={
+            <PrivateRoute>
+              <BeersPage />
+            </PrivateRoute>
+          }
         />
-      ))}
-    </div>
+      </Routes>
+    </>
   )
 }
 
