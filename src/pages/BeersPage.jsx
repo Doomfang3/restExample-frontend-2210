@@ -18,6 +18,7 @@ const BeersPage = () => {
    * Fetch our beers at mounting time
    */
   useEffect(() => {
+    console.log(process.env.REACT_APP_API_URL)
     fetchBeers()
     setIsLoading(false)
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -28,7 +29,7 @@ const BeersPage = () => {
    */
   const deleteBeer = async beerId => {
     // Delete a beer and await for the deletion (you SHOULD have a try/catch there)
-    await fetch(`http://localhost:5005/api/beers/${beerId}`, {
+    await fetch(`${process.env.REACT_APP_API_URL}api/beers/${beerId}`, {
       method: 'DELETE',
     })
     // Fetch the beers once the beer was properly deleted

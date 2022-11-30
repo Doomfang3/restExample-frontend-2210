@@ -39,7 +39,7 @@ const Beer = ({ beer, deleteBeer, fetchBeers, isLoading }) => {
   const handleSubmit = async event => {
     event.preventDefault()
 
-    await fetch(`http://localhost:5005/api/beers/${beer._id}`, {
+    await fetch(`${process.env.REACT_APP_API_URL}api/beers/${beer._id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
