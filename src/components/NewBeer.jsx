@@ -7,7 +7,7 @@ const NewBeer = ({ fetchBeers }) => {
   const handleSubmit = async event => {
     event.preventDefault()
 
-    const response = await fetch('http://localhost:5005/api/beers', {
+    await fetch('http://localhost:5005/api/beers', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

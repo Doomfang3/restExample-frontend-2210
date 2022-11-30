@@ -27,6 +27,7 @@ const SessionContextProvider = ({ children }) => {
     } else {
       setIsAuthenticated(false)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [token])
 
   const fetchWithToken =
@@ -45,7 +46,7 @@ const SessionContextProvider = ({ children }) => {
       callback(parsed)
     }
 
-  function fetchWithToken2(method, endpoint, callback, body = null) {
+  /*   function fetchWithToken2(method, endpoint, callback, body = null) {
     return async () => {
       const response = await fetch(`http://localhost:5005/${endpoint}`, {
         method,
@@ -59,7 +60,7 @@ const SessionContextProvider = ({ children }) => {
 
       callback(parsed)
     }
-  }
+  } */
 
   /* useEffect(() => {
     const localToken = localStorage.getItem('token')
