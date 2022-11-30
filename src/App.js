@@ -14,7 +14,10 @@ function App() {
       {isAuthenticated ? (
         <NavLink to='/beers'>Beers</NavLink>
       ) : (
-        <NavLink to='/login'>Login</NavLink>
+        <>
+          <NavLink to='/login'>Login</NavLink>
+          <NavLink to='/signup'>Signup</NavLink>
+        </>
       )}
       <Routes>
         <Route path='/signup' element={<SignupPage />} />
